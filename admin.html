@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Controle de Senhas</title>
+  <title>Controle de Senhas - MBS Technology</title>
   <link rel="stylesheet" href="style.css" />
   <style>
     .menu {
@@ -111,9 +111,14 @@
     </div>
   </div>
 
-  <div class="admin" style="margin-top: 80px; text-align: center;">
+  <div class="admin" style="margin-top: 100px; text-align: center;">
     <h2>Painel do Atendente</h2>
-    <p>Senha Atual: <span id="senha-atual">000</span></p>
+
+    <div class="senha-atual-container">
+      <span class="label-senha">Senha Atual:</span>
+      <p><span id="senha-atual">000</span></p>
+    </div>
+
     <button onclick="proximaSenha()">Próxima Senha</button>
     <button onclick="reiniciarSenha()">Reiniciar</button>
     <button onclick="adicionarGuiche()">+ Guichê</button>
@@ -155,6 +160,9 @@
         alert("Digite uma senha válida entre 1 e 999.");
         return;
       }
+
+      const nome = document.getElementById(`nome-${id}`).value.trim();
+      if (nome) localStorage.setItem("ultimo_guiche", nome);
 
       localStorage.setItem("senha_atual", valor.toString());
       atualizarTudo();
