@@ -1,0 +1,38 @@
+<!DOCTYPE html> 
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel de Senhas - MBS Technology</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header">
+    <img src="MBS_Technology.png" alt="MBS Technology" style="height: 40px;">
+  </div>
+
+  <div class="painel">
+    <h1>Senha Atual</h1>
+    <div id="senha-display">000</div>
+
+    <!-- Nome do guichê aparece aqui -->
+    <p id="nome-guiche" style="font-size: 1.5em; color: #00d9ff;">Guichê</p>
+  </div>
+
+  <script>
+    function atualizarDisplay() {
+      const senha = parseInt(localStorage.getItem("senha_atual") || "0");
+      const senhaFormatada = senha.toString().padStart(3, '0');
+      const display = document.getElementById("senha-display");
+      if (display) display.innerText = senhaFormatada;
+
+      const nome = localStorage.getItem("nome_ultimo_guiche") || "Guichê";
+      const guicheEl = document.getElementById("nome-guiche");
+      if (guicheEl) guicheEl.innerText = nome;
+    }
+
+    window.onload = atualizarDisplay;
+    setInterval(atualizarDisplay, 1000);
+  </script>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contato - MBS Technology</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .contato-container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    input, textarea {
+      background-color: #121f2f;
+      color: #e6f1ff;
+      border: 1.5px solid #00d9ff;
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 1em;
+      resize: none;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #008cff;
+      box-shadow: 0 0 8px #008cff;
+    }
+
+    .msg-enviada {
+      color: #00ff88;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .menu-voltar {
+      position: absolute;
+      top: 40px;
+      left: 20px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #00d9ff;
+    }
+
+    .menu-voltar a {
+      color: #00d9ff;
+      text-decoration: none;
+    }
+
+    .menu-voltar a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+        MBS Technology
+    </div>
+  <div class="menu-voltar">
+    <a href="admin.html">← Voltar</a>
+  </div>
+
+  <div class="contato-container">
+    <h2>Fale com a MBS Technology</h2>
+    <p>Envie sugestões, dúvidas ou suporte técnico:</p>
+
+    <form onsubmit="enviarContato(event)">
+      <input type="text" id="nome" placeholder="Seu nome" required />
+      <input type="email" id="email" placeholder="Seu e-mail" required />
+      <textarea id="mensagem" rows="5" placeholder="Digite sua mensagem" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+
+    <p id="status-envio" class="msg-enviada"></p>
+  </div>
+
+  <script>
+    function enviarContato(event) {
+      event.preventDefault();
+
+      const nome = document.getElementById('nome').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const mensagem = document.getElementById('mensagem').value.trim();
+
+      if (!nome || !email || !mensagem) {
+        document.getElementById('status-envio').innerText = "Preencha todos os campos.";
+        return;
+      }
+
+      // Simulação de envio
+      document.getElementById('status-envio').innerText = "Mensagem enviada com sucesso!";
+
+      // Limpa os campos
+      document.getElementById('nome').value = '';
+      document.getElementById('email').value = '';
+      document.getElementById('mensagem').value = '';
+    }
+  </script>
+</body>
+</html>

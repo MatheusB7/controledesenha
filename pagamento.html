@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pagamento - Premium MBS</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Container do conteúdo */
+    .pagamento-container {
+      text-align: center;
+      padding: 30px;
+      max-width: 500px;
+      margin: 80px auto 0; /* Espaço para o menu fixo */
+    }
+
+    /* Menu fixo no topo */
+    .menu {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #121f2f;
+      border: 1px solid #00d9ff;
+      border-radius: 8px;
+      display: inline-flex;
+      gap: 15px;
+      padding: 8px 20px;
+      z-index: 1000;
+      user-select: none;
+    }
+
+    .menu a {
+      color: #00d9ff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .menu a:hover {
+      background-color: #008cff;
+      color: black;
+    }
+
+    .pix-info {
+      margin: 20px 0;
+      background-color: #121f2f;
+      padding: 15px;
+      border: 1px solid #00d9ff;
+      border-radius: 8px;
+      font-size: 1.1em;
+    }
+
+    .pix-info strong {
+      color: #00ffcc;
+    }
+
+    .pix-img {
+      margin: 20px 0;
+    }
+
+    .pix-img img {
+      width: 200px;
+      border: 2px solid #00d9ff;
+      border-radius: 10px;
+    }
+
+    a.botao {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #00d9ff;
+      color: black;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1em;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    a.botao:hover {
+      background-color: #008cff;
+    }
+
+    .msg-final {
+      margin-top: 15px;
+      color: #00ff88;
+    }
+  </style>
+</head>
+<body>
+    <div class="header">
+        MBS Technology
+    </div>
+  <!-- Menu fixo -->
+  <nav class="menu">
+    <a href="ativar.html">Ativar Premium</a>
+    <a href="contato.html">Contato</a>
+  </nav>
+
+  <div class="pagamento-container">
+    <h2>Ativação Premium</h2>
+    <p>Valor: <strong>R$ 14,99 / mês</strong></p>
+
+    <div class="pix-info">
+      <p>Faça o pagamento via Pix para a chave:</p>
+      <p><strong>mbstechnologysite@gmail.com</strong></p>
+    </div>
+
+    <div class="pix-img">
+      <p>Ou escaneie o QR Code abaixo:</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://nubank.com.br/cobrar/193e5i/686064fc-17d0-463b-97b3-b9e27283de69" alt="QR Code Pix" />
+    </div>
+
+    <p>Após o pagamento, envie o comprovante para nosso WhatsApp:</p>
+    <a class="botao" href="https://wa.me/55SEUNUMERO" target="_blank" rel="noopener">📲 Enviar Comprovante</a>
+
+    <p class="msg-final">Você receberá o código de ativação em até 24h.</p>
+
+    <a class="botao" href="ativar.html" target="_blank" rel="noopener">Já tenho um código</a>
+  </div>
+</body>
+</html>

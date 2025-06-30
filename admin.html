@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Controle de Senhas</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .menu {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #121f2f;
+      border: 1px solid #00d9ff;
+      border-radius: 8px;
+      display: inline-flex;
+      gap: 15px;
+      padding: 8px 20px;
+      z-index: 1000;
+      user-select: none;
+    }
+
+    .menu a {
+      color: #00d9ff;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .menu a:hover {
+      background-color: #008cff;
+      color: black;
+    }
+
+    .header {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #00d9ff;
+      display: flex;
+      align-items: center;
+      user-select: none;
+    }
+
+    .guiches {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .guiche {
+      background-color: #121f2f;
+      border: 1px solid #00d9ff;
+      border-radius: 8px;
+      padding: 20px;
+      width: 270px;
+      text-align: center;
+    }
+
+    .guiche input, .guiche button {
+      margin-top: 8px;
+    }
+
+    .guiche input[type="text"], .guiche input[type="number"] {
+      background-color: #0d1117;
+      color: #e6f1ff;
+      border: 1px solid #00d9ff;
+      border-radius: 6px;
+      padding: 6px 10px;
+      text-align: center;
+      font-size: 1em;
+      width: 90%;
+    }
+
+    .guiche button {
+      font-size: 0.95em;
+      padding: 6px 12px;
+      border-radius: 6px;
+      background-color: #00d9ff;
+      border: none;
+      cursor: pointer;
+    }
+
+    .guiche button:hover {
+      background-color: #008cff;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    MBS Technology
+    <div class="menu">
+      <a href="index.html" target="_blank">Mostrador</a>
+      <a href="ativar.html">Ativador</a>
+      <a href="contato.html">Contato</a>
+    </div>
+    <div class="voz-select" id="voz-premium" style="display: none; margin-left: auto;">
+      <select id="seletor-voz">
+        <option value="male">👨 Masculina</option>
+        <option value="female">👩 Feminina</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="admin" style="margin-top: 80px; text-align: center;">
+    <h2>Painel do Atendente</h2>
+    <p>Senha Atual: <span id="senha-atual">000</span></p>
+    <button onclick="proximaSenha()">Próxima Senha</button>
+    <button onclick="reiniciarSenha()">Reiniciar</button>
+    <button onclick="adicionarGuiche()">+ Guichê</button>
+
+    <p>Status Premium: <span id="status-premium">Grátis</span></p>
+    <p>Dias restantes: <span id="dias-restantes" style="font-weight: bold; font-size: 1.4em; color: #00d9ff;">--</span></p>
+
+    <div class="guiches" id="lista-guiches"></div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function adicionarGuiche() {
+      const guiches = document.getElementById("lista-guiches");
+
+      const id = Date.now();
+      const div = document.createElement("div");
+      div.className = "guiche";
+      div.innerHTML = `
+        <input type="text" id="nome-${id}" value="Guichê 1" placeholder="Ex: Guichê 1" />
+        <input type="number" id="senha-${id}" placeholder="Senha Ex: 45" min="1" max="999" />
+        <button onclick="setarSenhaManual('${id}')">Definir Senha</button>
+        <button onclick="anunciarGuiche('${id}')">Anunciar</button>
+        <button onclick="this.parentElement.remove()">Remover</button>
+      `;
+      guiches.appendChild(div);
+    }
+
+    function setarSenhaManual(id) {
+      if (!premium) {
+        alert("Apenas usuários premium podem definir senha manual.");
+        return;
+      }
+
+      const input = document.getElementById(`senha-${id}`);
+      const valor = parseInt(input.value);
+
+      if (isNaN(valor) || valor < 1 || valor > 999) {
+        alert("Digite uma senha válida entre 1 e 999.");
+        return;
+      }
+
+      localStorage.setItem("senha_atual", valor.toString());
+      atualizarTudo();
+      falarSenha(valor);
+    }
+
+    function anunciarGuiche(id) {
+      const nome = document.getElementById(`nome-${id}`).value || "Guichê";
+      const senha = localStorage.getItem("senha_atual") || "0";
+      const texto = `Senha número ${senha}, ${nome}`;
+      const msg = new SpeechSynthesisUtterance(texto);
+      msg.lang = "pt-BR";
+      speechSynthesis.speak(msg);
+    }
+  </script>
+</body>
+</html>
