@@ -127,7 +127,7 @@
 
     <button onclick="proximaSenha()">Próxima Senha</button>
     <button onclick="reiniciarSenha()">Reiniciar</button>
-    <button onclick="adicionarGuiche()">+ Guichê</button>
+    <button onclick="verificarPremiumGuiche()">+ Guichê</button>
 
     <p>Status Premium: <span id="status-premium">Grátis</span></p>
     <p>Dias restantes: <span id="dias-restantes" style="font-weight: bold; font-size: 1.4em; color: #00d9ff;">--</span></p>
@@ -137,10 +137,18 @@
 
   <script src="script.js"></script>
   <script>
+    function verificarPremiumGuiche() {
+      if (!premium) {
+        alert("Recurso exclusivo para usuários Premium.");
+        return;
+      }
+      adicionarGuiche();
+    }
+
     function adicionarGuiche() {
       const guiches = document.getElementById("lista-guiches");
-
       const id = Date.now();
+
       const div = document.createElement("div");
       div.className = "guiche";
       div.innerHTML = `
