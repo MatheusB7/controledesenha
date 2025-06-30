@@ -22,13 +22,6 @@ if (!localStorage.getItem("senha_atual")) {
   localStorage.setItem("senha_atual", "0");
 }
 
-/**
- * Valida o código de ativação baseado na senha base e no dobro do mês atual
- * Exemplo: Base = [2025, 612, 2024]
- * Para junho (mês 6) multiplicador = 12
- * Código válido seria MBS-2025*12-0612*12-2024*12 = MBS-24300-7344-24288
- * Como excede 9999, modulo 10000 é aplicado para cada número
- */
 function validarCodigoNovo(codigoDigitado) {
   const base = [2025, 612, 2024];
   const now = new Date();
