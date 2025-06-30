@@ -7,38 +7,40 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="header">
-        MBS Technology
-    </div>
+  <div class="header">
+    MBS Technology
+  </div>
+
   <div class="admin" style="text-align: center; margin-top: 80px;">
     <h2>Ativação Premium</h2>
     <p>Digite seu código de ativação:</p>
-    <input type="text" id="codigo" placeholder="Ex: MBS-AB12-3F9C-7D4E" maxlength="19" autocomplete="off" />
+    <input type="text" id="codigo" placeholder="Ex: MBS-4300-3744-4288" maxlength="25" autocomplete="off" />
     <br />
     <button onclick="ativarPremium()" style="margin-top: 15px;">Ativar</button>
     <p id="msg-status" style="margin-top: 15px; font-weight: bold; color: #00d9ff;"></p>
   </div>
 
   <script>
-    function validarCodigo(codigo) {
-      const regex = /^MBS-([0-9A-F]{4})-([0-9A-F]{4})-([0-9A-F]{4})$/i;
-      if (!regex.test(codigo)) return false;
+    function validarCodigoNovo(codigoDigitado) {
+      const base = [2025, 612, 2024]; // Blocos da senha base
+      const now = new Date();
+      const multiplicador = (now.getMonth() + 1) * 2; // dobro do mês atual
 
-      const hex = "0123456789ABCDEF";
-      let soma = 0;
-      let chars = codigo.toUpperCase().replace(/-/g, '').slice(3);
+      const extrairNumeros = str => {
+        const partes = str.replace(/[^\d]/g, "").match(/\d{4}/g);
+        return partes ? partes.map(Number) : null;
+      };
 
-      for (let i = 0; i < chars.length; i++) {
-        if (i === chars.length - 2) continue; // Ignora penúltimo caractere (checksum)
-        let val = hex.indexOf(chars[i]);
-        if (val === -1) return false;
-        soma += val;
+      const codigoNumeros = extrairNumeros(codigoDigitado);
+      if (!codigoDigitado.startsWith("MBS-") || !codigoNumeros || codigoNumeros.length !== 3) return false;
+
+      for (let i = 0; i < 3; i++) {
+        let esperado = base[i] * multiplicador;
+        if (esperado >= 10000) esperado = esperado % 10000; // pega os últimos 4 dígitos
+        if (codigoNumeros[i] !== esperado) return false;
       }
 
-      let checksum = soma % 16;
-      let checksumChar = hex[checksum];
-
-      return chars[chars.length - 2] === checksumChar;
+      return true;
     }
 
     function ativarPremium() {
@@ -46,9 +48,9 @@
       const codigo = codigoInput.value.trim().toUpperCase();
       const msg = document.getElementById("msg-status");
 
-      if (!validarCodigo(codigo)) {
+      if (!validarCodigoNovo(codigo)) {
         msg.style.color = "#ff5555";
-        msg.innerText = "Código inválido. Verifique e tente novamente.";
+        msg.innerText = "Código inválido para este mês.";
         return;
       }
 
@@ -57,12 +59,13 @@
       msg.style.color = "#00ff88";
       msg.innerText = "Premium ativado por 30 dias!";
 
-      // Opcional: desabilitar input e botão após ativação
       codigoInput.disabled = true;
       document.querySelector("button").disabled = true;
 
-      // Recarregar para atualizar status, se necessário
-      setTimeout(() => location.reload(), 1500);
+      // Redireciona após 1.5 segundos para a página admin
+      setTimeout(() => {
+        window.location.href = "https://matheusb7.github.io/controledesenha/admin";
+      }, 500);
     }
   </script>
 </body>
