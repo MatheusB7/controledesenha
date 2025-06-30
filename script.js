@@ -1,7 +1,8 @@
 // script.js
+
 let premium = false;
 
-// Verifica validade do Premium
+// Verifica validade do Premium (30 dias)
 const hoje = new Date();
 const validade = localStorage.getItem("premium_validade");
 
@@ -19,6 +20,35 @@ if (localStorage.getItem("premium_ativo") === "true" && validade) {
 // Inicializa a senha no localStorage se ainda não existir
 if (!localStorage.getItem("senha_atual")) {
   localStorage.setItem("senha_atual", "0");
+}
+
+/**
+ * Valida o código de ativação baseado na senha base e no dobro do mês atual
+ * Exemplo: Base = [2025, 612, 2024]
+ * Para junho (mês 6) multiplicador = 12
+ * Código válido seria MBS-2025*12-0612*12-2024*12 = MBS-24300-7344-24288
+ * Como excede 9999, modulo 10000 é aplicado para cada número
+ */
+function validarCodigoNovo(codigoDigitado) {
+  const base = [2025, 612, 2024];
+  const now = new Date();
+  const multiplicador = (now.getMonth() + 1) * 2; // dobro do mês atual
+
+  const extrairNumeros = str => {
+    const partes = str.replace(/[^\d]/g, "").match(/\d{4}/g);
+    return partes ? partes.map(Number) : null;
+  };
+
+  const codigoNumeros = extrairNumeros(codigoDigitado);
+  if (!codigoDigitado.startsWith("MBS-") || !codigoNumeros || codigoNumeros.length !== 3) return false;
+
+  for (let i = 0; i < 3; i++) {
+    let esperado = base[i] * multiplicador;
+    if (esperado >= 10000) esperado = esperado % 10000; // Ajusta para 4 dígitos
+    if (codigoNumeros[i] !== esperado) return false;
+  }
+
+  return true;
 }
 
 function atualizarDisplay() {
