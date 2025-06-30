@@ -1,3 +1,4 @@
+/* Reset básico */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -9,18 +10,36 @@ body {
   height: 100vh;
 }
 
+/* Estrutura de painéis */
 .painel, .admin {
   text-align: center;
 }
 
+/* Estilo para painel público (gradiente bonito) */
 #senha-display {
   font-size: 6em;
   margin: 20px 0;
   background: #121f2f;
   padding: 20px;
   border-radius: 10px;
+  color: white; /* branco puro no painel público */
 }
 
+/* Estilo para senha no admin (em branco sem gradiente) */
+#senha-atual {
+  font-size: 5em;
+  font-weight: 900;
+  color: #ffffff; /* branco puro */
+  padding: 0 20px;
+  border: 2px solid #00d9ff;
+  border-radius: 12px;
+  min-width: 160px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+
+/* Botões padrão */
 button {
   font-size: 1.2em;
   margin: 10px;
@@ -30,12 +49,14 @@ button {
   color: black;
   border-radius: 8px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #008cff;
 }
 
+/* Cabeçalho da página */
 .header {
   position: absolute;
   top: 10px;
@@ -47,7 +68,7 @@ button:hover {
 
 /* Seletor de voz no canto superior direito */
 #voz-premium {
-  position: fixed;    /* fixa na janela, não no fluxo do documento */
+  position: fixed;
   top: 10px;
   right: 20px;
   z-index: 1000;
@@ -63,7 +84,7 @@ button:hover {
   font-size: 1em;
 }
 
-/* Estilo aprimorado para input de número (#senha-manual) */
+/* Input numérico estilizado (senha manual) */
 #senha-manual {
   background-color: #121f2f;
   color: #e6f1ff;
@@ -75,13 +96,13 @@ button:hover {
   text-align: center;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
-  -moz-appearance: textfield; /* Remove setinhas no Firefox */
+  -moz-appearance: textfield;
 }
 
-#senha-manual::-webkit-inner-spin-button, 
-#senha-manual::-webkit-outer-spin-button { 
-  -webkit-appearance: none;  /* Remove setinhas no Chrome/Safari */
-  margin: 0; 
+#senha-manual::-webkit-inner-spin-button,
+#senha-manual::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 #senha-manual:focus {
@@ -89,7 +110,7 @@ button:hover {
   box-shadow: 0 0 8px #008cff;
 }
 
-/* Estilo semelhante para input texto (#codigo) do ativar.html */
+/* Input de código no ativar.html */
 #codigo {
   background-color: #121f2f;
   color: #e6f1ff;
@@ -97,7 +118,7 @@ button:hover {
   border-radius: 8px;
   padding: 10px 15px;
   font-size: 1.1em;
-  width: 250px; /* mais largo para código alfanumérico */
+  width: 250px;
   text-align: center;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   outline: none;
@@ -106,4 +127,57 @@ button:hover {
 #codigo:focus {
   border-color: #008cff;
   box-shadow: 0 0 8px #008cff;
+}
+
+/* ===== Exibição estilizada da senha atual (painel do atendente) ===== */
+.senha-atual-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  user-select: none;
+}
+
+.label-senha {
+  font-size: 1.5em;
+  font-weight: 600;
+  color: #00d9ff;
+  letter-spacing: 1px;
+}
+
+.display-senha {
+  font-size: 5em;
+  font-weight: 900;
+  background: linear-gradient(135deg, #00d9ff, #008cff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow:
+    0 0 5px rgba(0, 217, 255, 0.7),
+    0 0 10px rgba(0, 140, 255, 0.7);
+  padding: 0 20px;
+  border: 2px solid #00d9ff;
+  border-radius: 12px;
+  min-width: 160px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+  .display-senha {
+    font-size: 3em;
+  }
+
+  .label-senha {
+    font-size: 1.2em;
+  }
+
+  button {
+    width: 90%;
+  }
+
+  #codigo, #senha-manual {
+    width: 90%;
+  }
 }
